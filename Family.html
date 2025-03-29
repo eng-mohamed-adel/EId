@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة تهنئة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #4a90e2, #a18cd1);
+            font-family: 'Tajawal', sans-serif;
+            direction: rtl;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .input-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .input-container input {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin: 10px 0;
+            width: 100%;
+            font-family: 'Tajawal', sans-serif;
+            transition: border 0.3s;
+        }
+        
+        .input-container input:focus {
+            border-color: #ff758c;
+            outline: none;
+        }
+        
+        .input-container button {
+            padding: 12px 25px;
+            background: #ff758c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-family: 'Tajawal', sans-serif;
+            width: 100%;
+        }
+        
+        .input-container button:hover {
+            background: #e63950;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card {
+            width: 100%;
+            max-width: 400px;
+            min-height: 350px;
+            background: transparent;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .greeting-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin: 15px 0;
+            border-radius: 50%;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            border: 4px solid white;
+            display: none;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            border-color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .action-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .action-btn i {
+            margin-left: 8px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-container">
+            <h2>أدخل اسمك باللغة العربية:</h2>
+            <input type="text" id="username" placeholder="اكتب اسمك هنا">
+            <button onclick="showCard()">عرض البطاقة</button>
+        </div>
+        
+        <div class="card" id="card">
+            <div class="card-inner">
+                <div class="card-front" onclick="flipCard()">
+                    <i class="fas fa-gift" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                    <div>اضغط هنا لفتح البطاقة</div>
+                </div>
+                <div class="card-back">
+                    <h2 id="greeting"></h2>
+                    <img id="greeting-image" class="greeting-image" alt="صورة تهنئة">
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="reloadPage(event)">
+                            <i class="fas fa-redo"></i> إعادة تحميل
+                        </button>
+                        <button class="action-btn" onclick="saveCard(event)">
+                            <i class="fas fa-download"></i> حفظ البطاقة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="greeting-music">
+        <source src="./EID.mp3" type="audio/mpeg">
+        المتصفح الخاص بك لا يدعم عنصر الصوت.
+    </audio>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        let isImageLoaded = false;
+        let isMusicPlaying = false;
+        let music = document.getElementById('greeting-music');
+
+        function showCard() {
+            const username = document.getElementById('username').value.trim();
+            const greetingText = document.getElementById('greeting');
+            const greetingImage = document.getElementById('greeting-image');
+            const inputContainer = document.querySelector('.input-container');
+            const card = document.getElementById('card');
+
+            if (!username) {
+                alert('من فضلك أدخل اسمك!');
+                return;
+            }
+
+            // إعادة تعيين الحالات
+            isImageLoaded = false;
+            greetingImage.style.display = "none";
+            card.classList.remove('flipped');
+
+            if (username === "سوسو") {
+                greetingText.innerHTML = `كل سنة وانت طيبة يا حبيبتي يا ${username} <i class="fas fa-heart" style="color: #ffeb3b;"></i>`;
+                greetingImage.src = "soso.jpg";
+                greetingImage.style.display = "block";
+                
+                greetingImage.onload = function() {
+                    isImageLoaded = true;
+                };
+                
+                greetingImage.onerror = function() {
+                    greetingImage.style.display = "none";
+                    isImageLoaded = false;
+                };
+            } else {
+                greetingText.innerHTML = `عيد فطر مبارك يا ${username}! <i class="fas fa-moon" style="color: #ffeb3b;"></i>`;
+                isImageLoaded = true;
+            }
+
+            card.style.display = 'block';
+            inputContainer.style.display = 'none';
+        }
+
+        function flipCard() {
+            const card = document.getElementById('card');
+            card.classList.add('flipped');
+            
+            if (!isMusicPlaying) {
+                music.play()
+                    .then(() => {
+                        isMusicPlaying = true;
+                        music.onended = function() {
+                            isMusicPlaying = false;
+                        };
+                    })
+                    .catch(error => {
+                        console.error("حدث خطأ في تشغيل الصوت:", error);
+                    });
+            }
+        }
+
+        function reloadPage(event) {
+            event.stopPropagation();
+            location.reload();
+        }
+
+        function saveCard(event) {
+            event.stopPropagation();
+            
+            const username = document.getElementById('username').value.trim();
+            
+            // التحقق من تحميل الصورة لاسم "سوسو"
+            if (username === "سوسو" && !isImageLoaded) {
+                alert("الرجاء الانتظار حتى يتم تحميل الصورة بالكامل");
+                return;
+            }
+            
+            // تأخير بسيط قبل الحفظ لضمان عرض المحتوى بالكامل
+            setTimeout(() => {
+                html2canvas(document.querySelector('.card-back'), {
+                    useCORS: true,
+                    allowTaint: true,
+                    scale: 2,
+                    logging: true,
+                    backgroundColor: null
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `بطاقة_تهنئة_${username || 'عيد_فطر'}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }).catch(error => {
+                    console.error('حدث خطأ أثناء حفظ البطاقة:', error);
+                    alert('حدث خطأ أثناء حفظ البطاقة. يرجى المحاولة مرة أخرى أو التحقق من اتصال الإنترنت.');
+                });
+            }, 300);
+        }
+    </script>
+</body>
+</html>
